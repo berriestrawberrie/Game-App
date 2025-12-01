@@ -24,6 +24,7 @@ export async function authenticateToken(
     req.user = decodedToken; // attach user info to request
     next();
   } catch (error) {
+    console.log(error);
     return res.status(403).json({ error: "Invalid token" });
   }
 }
