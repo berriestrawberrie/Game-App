@@ -5,13 +5,11 @@ name: Node.js Frontend CI
 
 on:
   push:
-    branches: ["main"]
-    paths:
-      - "frontend/**"
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
-    paths:
-      - "frontend/**"
+    branches:
+      - main
 
 jobs:
   build:

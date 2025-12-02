@@ -5,15 +5,12 @@
 name: Node.js Backend CI
 
 on:
-  #This ensures the workflow only triggers when files inside backend/ change
   push:
-    branches: ["main"]
-    paths:
-      - "backend/**"
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
-    paths:
-      - "backend/**"
+    branches:
+      - main
 
 jobs:
   build:
