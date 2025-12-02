@@ -1,5 +1,6 @@
 import express from "express";
-import { authenticateToken, AuthenticatedRequest } from "./middleware/auth.js";
+import { authenticateToken } from "./middleware/auth";
+import type { AuthenticatedRequest } from "./middleware/auth";
 
 const app = express();
 
