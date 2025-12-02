@@ -16,17 +16,6 @@ const WeatherWidget: React.FC = () => {
   const [weather, setWeather] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Fetch default city weather on mount
-  useEffect(() => {
-    const loadWeather = async () => {
-      setLoading(true);
-      const result = await fetchWeather(city);
-      setWeather("📍 " + result);
-      setLoading(false);
-    };
-    loadWeather();
-  }, []);
-
   const handleGetWeather = async () => {
     if (!city.trim()) {
       alert("Please enter a city!");

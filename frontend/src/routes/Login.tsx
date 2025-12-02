@@ -1,12 +1,21 @@
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
+import RegisterForm from "../components/Login/RegisterForm";
 
-export const Login: React.FC = () => {
+interface Props {}
+export const Login: React.FC<Props> = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
     // after login success
-    navigate("/dashboard");
+    navigate("/");
   };
 
-  return <button onClick={handleLogin}>Login</button>;
+  return (
+    <>
+      <Layout title="New Player">
+        <RegisterForm />
+      </Layout>
+    </>
+  );
 };
