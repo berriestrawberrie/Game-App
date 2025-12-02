@@ -7,6 +7,7 @@ import { defineConfig } from "eslint/config";
 export default defineConfig([
   {
     files: ["**/*.{ts,tsx}"], // only lint .ts and .tsx files
+    ignores: ["dist/**"],
     languageOptions: {
       globals: globals.browser,
       parserOptions: {
