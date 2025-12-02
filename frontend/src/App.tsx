@@ -1,17 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Login } from "./routes/login";
-import Home from "./routes/Home";
-import { User } from "./routes/user";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-const About: React.FC = () => <h2>About Page</h2>;
+import Home from "./routes/Home";
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/user" element={<User />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
