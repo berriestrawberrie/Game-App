@@ -1,7 +1,7 @@
 import express from "express";
 import { authenticateToken } from "./middleware/auth";
 import type { AuthenticatedRequest } from "./middleware/auth";
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 import admin from "firebase-admin";
 import { usersRoute } from "./routes/user";
 
