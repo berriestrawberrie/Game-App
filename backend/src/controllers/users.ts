@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import admin from "firebase-admin";
 import { userSchema, userCreationSchema } from "../schemas/schemas";
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
