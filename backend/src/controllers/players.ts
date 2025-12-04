@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { userCreationSchema } from "../schemas/schemas";
 import { PrismaClient } from "@prisma/client";
 import { firebaseAdmin } from "../../config/firebase";
-import admin from "firebase-admin";
 
 const prisma = new PrismaClient();
 
@@ -41,7 +40,7 @@ export const registerPlayer = async (req: Request, res: Response) => {
     }
 
     res.status(201).json({ message: "Player registered successfully", user });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ error: "Failed to register player" });
   }
@@ -64,7 +63,8 @@ export const loginPlayer = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "User not found in Prisma" });
     }
     res.json({ user });
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({ error: "Failed to fetch user" });
+    console.log(error);
   }
 };

@@ -58,7 +58,7 @@ export const login = async (userInfo: UserLoginInterface) => {
       },
     });
     return { user, token };
-  } catch (error: any) {
+  } catch (error) {
     throw new Error(error.message);
   }
 };
@@ -68,7 +68,7 @@ export const logout = async () => {
     await signOut(auth);
     localStorage.removeItem("token");
     console.log("User logged out");
-  } catch (error: any) {
+  } catch (error) {
     console.error("Logout failed:", error);
   }
 };

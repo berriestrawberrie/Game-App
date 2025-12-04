@@ -1,18 +1,10 @@
-import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import RegisterForm from "../components/Login/RegisterForm";
 import { useState } from "react";
 import LoginForm from "../components/Login/LoginForm";
 
-interface Props {}
-export const Login: React.FC<Props> = () => {
-  const navigate = useNavigate();
+export const Login: React.FC = () => {
   const [showLogin, setShowLogin] = useState(true);
-
-  const handleLogin = () => {
-    // after login success
-    navigate("/");
-  };
 
   return (
     <>

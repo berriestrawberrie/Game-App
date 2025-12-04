@@ -15,7 +15,6 @@ const LoginForm: React.FC = () => {
 
   const [formData, setFormData] = useState(FORM_INIT_STATE);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +39,7 @@ const LoginForm: React.FC = () => {
       localStorage.setItem("token", token);
       // Navigate to user page with UID
       navigate(`/player/${user.uid}`);
-    } catch (error: any) {
+    } catch (error) {
       console.error("Login error:", error);
       setAlert({ message: "Failed to login player.", type: "error" });
     }
