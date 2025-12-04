@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Logout } from "./Login/Logout";
 
 const Menu = () => {
   return (
@@ -48,6 +49,10 @@ const Menu = () => {
               aria-hidden="true"
             ></i>
           </a>
+        </li>
+        {/* SIGN OUT */}
+        <li>
+          <Logout />
         </li>
       </ul>
     </nav>

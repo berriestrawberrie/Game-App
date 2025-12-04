@@ -1,8 +1,11 @@
 import axios from "axios";
-import { getCurrentUserToken } from "./token";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
-import type { UserWithPasswordInterface } from "../interfaces/interfaces";
+import type {
+  UserWithPasswordInterface,
+  UserLoginInterface,
+} from "../interfaces/interfaces";
 import { userCreationSchema } from "../schemas/schemas";
 
 const BACKEND_PORT = "4000";
@@ -35,5 +38,37 @@ export const registerPlayer = async (userInfo: UserWithPasswordInterface) => {
   } catch (error: unknown) {
     console.error(error);
     throw error;
+  }
+};
+
+export const login = async (userInfo: UserLoginInterface) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      userInfo.email,
+      userInfo.password
+    );
+    const user = userCredential.user;
+    // Get ID token to send to backend
+    const token = await user.getIdToken();
+
+    await axios.get(`${BASE_URL}/myaccount`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { user, token };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const logout = async () => {
+  try {
+    await signOut(auth);
+    localStorage.removeItem("token");
+    console.log("User logged out");
+  } catch (error: any) {
+    console.error("Logout failed:", error);
   }
 };
