@@ -12,7 +12,7 @@ const Menu = () => {
 
         {/* Profile (current page) */}
         <li>
-          <Link to="/login" title="Login">
+          <Link to="/login" title="Register">
             <i
               className="fa-regular fa-circle-user text-4xl hover:text-lightaccent-600 dark:hover:text-darkaccent-600"
               aria-hidden="true"
