@@ -58,7 +58,7 @@ export const login = async (userInfo: UserLoginInterface) => {
       },
     });
     return { user, token };
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.message);
   }
 };
