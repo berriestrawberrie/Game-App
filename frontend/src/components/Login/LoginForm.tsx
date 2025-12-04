@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../api/playerHandler";
 import Alert from "../Alert";
 const FORM_INIT_STATE = {
   password: "",
@@ -31,6 +32,18 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      console.log("FORM DATA SENT", formData);
+      const { user, token } = await login(formData);
+      console.log(user);
+      // Save token in localStorage or context
+      localStorage.setItem("token", token);
+      // Navigate to user page with UID
+      navigate(`/player/${user.uid}`);
+    } catch (error: any) {
+      console.error("Login error:", error);
+      setAlert({ message: "Failed to login player.", type: "error" });
+    }
   };
 
   return (
