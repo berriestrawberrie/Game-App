@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
 import type {
   UserWithPasswordInterface,
@@ -60,15 +60,5 @@ export const login = async (userInfo: UserLoginInterface) => {
     return { user, token };
   } catch (error) {
     console.error("Registration failed:", error);
-  }
-};
-
-export const logout = async () => {
-  try {
-    await signOut(auth);
-    localStorage.removeItem("token");
-    console.log("User logged out");
-  } catch (error) {
-    console.error("Logout failed:", error);
   }
 };
