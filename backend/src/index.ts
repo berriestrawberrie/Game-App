@@ -1,12 +1,19 @@
 import express from "express";
+import cors from "cors";
 import { authenticateToken } from "./middleware/auth";
 import type { AuthenticatedRequest } from "./middleware/auth";
 import { PrismaClient } from "@prisma/client";
-import admin from "firebase-admin";
 import { usersRoute } from "./routes/user";
 
 const prisma = new PrismaClient();
 const app = express();
+// Allow requests from your frontend origin
+app.use(
+  cors({
+    origin: "http://localhost:5173", // React dev server
+    credentials: true, // if you send cookies/auth headers
+  })
+);
 
 app.use(express.json());
 
