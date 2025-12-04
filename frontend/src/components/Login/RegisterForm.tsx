@@ -55,14 +55,6 @@ const RegisterForm: React.FC = () => {
 
   return (
     <>
-      {alert && (
-        <Alert
-          message={alert.message}
-          type={alert.type}
-          onClose={() => setAlert(null)}
-        />
-      )}
-
       <div className="mx-auto sm:w-4/5  text-black p-4 flex justify-center items-center  dark:text-light-300">
         <form
           id="registerForm"
@@ -173,13 +165,20 @@ const RegisterForm: React.FC = () => {
 
             <button
               type="submit"
-              className="bg-blue-600 p-3 text-white rounded hover:bg-blue-700 transition"
+              className="w-full bg-blue-600 p-3 text-white rounded hover:bg-blue-700 transition"
             >
               Register
             </button>
           </fieldset>
         </form>
       </div>
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
     </>
   );
 };

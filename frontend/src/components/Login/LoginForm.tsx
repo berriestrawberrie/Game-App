@@ -32,9 +32,14 @@ const LoginForm: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log("FORM DATA SENT", formData);
-      const { user, token } = await login(formData);
-      console.log(user);
+      const result = await login(formData);
+
+      if (!result) {
+        setAlert({ message: "Failed to login player.", type: "error" });
+        return;
+      }
+
+      const { user, token } = result;
       // Save token in localStorage or context
       localStorage.setItem("token", token);
       // Navigate to user page with UID
@@ -47,13 +52,6 @@ const LoginForm: React.FC = () => {
 
   return (
     <>
-      {alert && (
-        <Alert
-          message={alert.message}
-          type={alert.type}
-          onClose={() => setAlert(null)}
-        />
-      )}
       <div className="mx-auto sm:w-4/5  text-black  p-4 flex justify-center items-center dark:text-light-300">
         <form
           className="w-full flex flex-col justify-evenly rounded-xl bg-light-200 dark:bg-dark-100  p-4 h-[300px]"
@@ -92,6 +90,13 @@ const LoginForm: React.FC = () => {
           </button>
         </form>
       </div>
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
     </>
   );
 };
