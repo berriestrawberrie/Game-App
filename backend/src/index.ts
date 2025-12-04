@@ -1,13 +1,18 @@
 import express from "express";
-import { authenticateToken } from "./middleware/auth";
-import type { AuthenticatedRequest } from "./middleware/auth";
+import cors from "cors";
+import { usersRoute } from "./routes/players";
 
 const app = express();
+// Allow requests from your frontend origin
+app.use(
+  cors({
+    origin: "http://localhost:5173", // React dev server
+    credentials: true, // if you send cookies/auth headers
+  })
+);
 
 app.use(express.json());
 
-app.get("/profile", authenticateToken, (req: AuthenticatedRequest, res) => {
-  res.json({ message: `Hello, ${req.user?.email}` });
-});
+app.use("/players", usersRoute);
 
 app.listen(4000, () => console.log("Backend running on port 4000"));

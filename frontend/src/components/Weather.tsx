@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // --- Weather API ---
 async function fetchWeather(city: string): Promise<string> {
@@ -15,17 +15,6 @@ const WeatherWidget: React.FC = () => {
   const [city, setCity] = useState<string>("");
   const [weather, setWeather] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
-  // Fetch default city weather on mount
-  useEffect(() => {
-    const loadWeather = async () => {
-      setLoading(true);
-      const result = await fetchWeather(city);
-      setWeather("📍 " + result);
-      setLoading(false);
-    };
-    loadWeather();
-  }, []);
 
   const handleGetWeather = async () => {
     if (!city.trim()) {
