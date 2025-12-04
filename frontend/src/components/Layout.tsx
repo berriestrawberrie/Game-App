@@ -15,9 +15,9 @@ const Layout: React.FC<Props> = ({ title, children }) => {
       <div className="fixed bottom-[10px] right-0">
         <ThemeToggle />
       </div>
-      <div className="dark:text-light-100 mx-auto w-full sm:w-3/4 mb-12">
+      <div className="my-[100px] dark:text-light-100 mx-auto w-full sm:my-2.5 sm:w-3/4 ">
         <Weather />
-        <h1 className="text-3xl font-bold text-center">{title}</h1>
+        <h1 className="text-3xl font-bold text-center mb-3">{title}</h1>
         {children}
       </div>
     </div>

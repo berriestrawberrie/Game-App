@@ -70,10 +70,10 @@ const RegisterForm: React.FC = () => {
         />
       )}
 
-      <div className="mx-auto sm:w-4/5 bg-light-200 text-black rounded-xl p-4 flex justify-center items-center dark:bg-dark-100 dark:text-light-300">
+      <div className="mx-auto sm:w-4/5  text-black p-4 flex justify-center items-center  dark:text-light-300">
         <form
           id="registerForm"
-          className="register w-full mx-auto space-y-3"
+          className="w-full bg-light-200 mx-auto space-y-3 p-5 rounded-xl  dark:bg-dark-100"
           onSubmit={handleRegistration}
         >
           {error && <p className="registration-form__error">{error}</p>}
@@ -178,14 +178,12 @@ const RegisterForm: React.FC = () => {
               />
             </div>
 
-            <div className="flex justify-center mt-6">
-              <button
-                type="submit"
-                className="bg-blue-600 px-2 text-white rounded hover:bg-blue-700 transition"
-              >
-                Register
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="bg-blue-600 p-3 text-white rounded hover:bg-blue-700 transition"
+            >
+              Register
+            </button>
           </fieldset>
         </form>
       </div>
