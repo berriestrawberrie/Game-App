@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
 import { registerPlayer } from "../../api/playerHandler";
-import { FirebaseError } from "firebase/app";
 import Alert from "../Alert";
-import z from "zod";
 const FORM_INIT_STATE = {
   firstName: "",
   lastName: "",
@@ -21,8 +17,6 @@ const RegisterForm: React.FC = () => {
 
   const [formData, setFormData] = useState(FORM_INIT_STATE);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
