@@ -5,18 +5,19 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 
 model User {
   id         Int      @id @default(autoincrement())
   email      String   @unique
+  firebaseId String   @unique
   firstName  String
   lastName   String
   avatarUrl  String?
