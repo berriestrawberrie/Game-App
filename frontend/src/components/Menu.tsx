@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Menu = () => {
   return (
-    <nav className="bg-light-100 border-e border-b border-light-200  w-full flex flex-col items-center py-4 sm:h-screen sm:w-[70px] dark:bg-dark-100 dark:text-light-200 dark:border-dark-300">
+    <nav className="fixed z-10 top-0 bg-light-100 border-e border-b border-light-200  w-full flex flex-col items-center py-4 sm:h-screen sm:w-[70px] dark:bg-dark-100 dark:text-light-200 dark:border-dark-300">
       <ul className="flex items-center w-full justify-evenly sm:flex-col sm:space-y-6">
         <li>
           <Link to="/" title="Home">
