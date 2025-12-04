@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../api/playerHandler";
+import { useAuthStore } from "../../store/authStore";
 
 export const Logout: React.FC = () => {
   const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = async () => {
     await logout();
