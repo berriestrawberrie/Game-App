@@ -36,7 +36,6 @@ const RegisterForm: React.FC = () => {
       setError("Passwords do not match");
       return;
     }
-    setIsLoading(true);
     setError("");
     try {
       await registerPlayer({
