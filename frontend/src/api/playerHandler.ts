@@ -58,8 +58,8 @@ export const login = async (userInfo: UserLoginInterface) => {
       },
     });
     return { user, token };
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error) {
+    console.error("Registration failed:", error);
   }
 };
 
