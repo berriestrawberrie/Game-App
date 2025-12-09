@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+.gmBtn {
+  border: 1px solid rgb(77, 142, 255);
+  box-shadow: 1px 2px 0 1px rgba(77, 142, 255, 1);
+  transition: all 0.1s ease-in-out;
+}
+
+.gmBtn:hover {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transform: translate(2px, 3px);
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
