@@ -1,26 +1,73 @@
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { useAuthStore } from "../store/authStore";
-
-type PlayerParams = {
-  uid: string;
-};
+import { getUserScores } from "../api/playerHandler";
+import type { UserScoreInterface } from "../interfaces/interfaces";
+import BarGraph from "../components/BarGraph";
+import PieGraph from "../components/PieGraph";
 
 export const Player: React.FC = () => {
-  const { uid } = useParams<PlayerParams>();
   //const [prismaUser, setPrismaUser] = useState<any>(null);
   const token = useAuthStore((state) => state.token); // get token from Zustand
-  //const authUser = useAuthStore((state) => state.user); // Firebase user object
+  const [data, setData] = useState<UserScoreInterface>();
 
   useEffect(() => {
-    if (!token || !uid) return console.log("Missing Player UID or Token");
-  }, []);
+    if (!token) return console.log("Missing Player Token");
+    const fetchData = async () => {
+      try {
+        const fetchedUser = await getUserScores(token);
+        setData(fetchedUser);
+      } catch (error) {
+        console.error("Failed to fetch user score data:", error);
+      }
+    };
+    fetchData();
+  }, [token]);
+
+  const name: string = data ? `${data.firstName} ${data.lastName}` : "";
+  const totalMinutes: number = data
+    ? data.scores.reduce((sum, score) => sum + score.durationMinutes, 0)
+    : 0;
+  const graphData = data
+    ? data.scores.map((score) => ({
+        key: score.game.title,
+        value: score.durationMinutes,
+      }))
+    : [];
 
   return (
     <>
-      <Layout title={"Player"}>
-        <h2>Player ID: {uid}</h2>
+      <Layout title={name + ": Game Overview"}>
+        <div className="flex flex-col sm:flex-row items-center justify-evenly">
+          <div>
+            <img
+              id="imagePreview"
+              className="opacity-20"
+              src="/user-2.png"
+              alt="Profile Preview"
+            />
+          </div>
+          <div className="w-full sm:w-1/2">
+            <BarGraph graphData={graphData} />
+          </div>
+        </div>
+        {/*BOTTOM UI*/}
+        <div className="flex flex-col sm:flex-row  items-center justify-evenly">
+          <div>
+            <PieGraph graphData={graphData} />
+          </div>
+          <div className="lg:w-1/2">
+            <div className="mx-auto text-white bg-lightaccent-600 lg:w-3/4 h-[115px] rounded-xl text-center p-3 text-2xl lg:text-3xl m-4 dark:bg-darkaccent-600 dark:text-black">
+              <h3 className=" font-bold ">Total Play Time</h3>
+              <p className="mt-2">{totalMinutes}</p>
+            </div>
+            <button className="block mx-auto gmBtn text-white bg-lightaccent-600 lg:w-3/4 rounded-xl text-center p-3 text-2xl lg:text-3xl dark:bg-darkaccent-600 dark:text-black ">
+              <h3 className=" font-bold ">
+                <i className="fa-solid fa-dice me-2 "></i>New Game
+              </h3>
+            </button>
+          </div>
+        </div>
       </Layout>
     </>
   );

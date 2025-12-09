@@ -27,4 +27,8 @@ export interface ScoreInterface {
   gameId: number;
   userId: number;
   durationMinutes: number;
+  startedAt: string;
+  stoppedAt: string;
+  createdAt: string;
+  game: GameInterface;
 }
