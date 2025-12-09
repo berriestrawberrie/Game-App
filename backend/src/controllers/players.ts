@@ -94,3 +94,16 @@ export const getUserScores = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await prisma.user.findMany();
+    if (users.length === 0) {
+      return res.status(404).json({ error: "No students found", users: [] });
+    }
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    res.status(500).json({ error: "Failed to fetch students" });
+  }
+};
