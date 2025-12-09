@@ -57,17 +57,18 @@ export const login = async (userInfo: UserLoginInterface) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return { user, token };
+    return { user, token, uid: user.uid };
   } catch (error) {
     console.error("Registration failed:", error);
   }
 };
 
-export const getUserScores = async (token: string) => {
-  const res = await axios.get(`${BASE_URL}/scores`, {
+export const getUserScores = async (token: string, userId: string) => {
+  const res = await fetch(`${BASE_URL}/scores/${userId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data;
+  if (!res.ok) throw new Error("Failed to fetch user scores");
+  return res.json();
 };
 
 export const getAllUsers = async (token: string) => {
