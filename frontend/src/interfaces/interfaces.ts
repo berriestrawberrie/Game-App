@@ -3,6 +3,7 @@ export interface UserInterface {
   firstName: string;
   lastName: string;
   avatarUrl?: string;
+  id: number;
 }
 
 export interface UserLoginInterface {
@@ -21,10 +22,16 @@ export interface UserScoreInterface extends UserInterface {
 export interface GameInterface {
   title: string;
   description: string;
+  id: number;
 }
 
 export interface ScoreInterface {
+  id: number;
   gameId: number;
   userId: number;
   durationMinutes: number;
+  startedAt: string;
+  stoppedAt: string;
+  createdAt: string;
+  game: GameInterface;
 }

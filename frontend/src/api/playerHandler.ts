@@ -62,3 +62,10 @@ export const login = async (userInfo: UserLoginInterface) => {
     console.error("Registration failed:", error);
   }
 };
+
+export const getUserScores = async (token: string) => {
+  const res = await axios.get(`${BASE_URL}/scores`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
