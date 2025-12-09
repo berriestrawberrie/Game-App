@@ -64,7 +64,33 @@ export const loginPlayer = async (req: Request, res: Response) => {
     }
     res.json({ user });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch user" });
+    res.status(500).json({ error: "Failed to login user" });
+    console.log(error);
+  }
+};
+
+export const getUserScores = async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ error: "No token provided" });
+    }
+    const token = authHeader.split(" ")[1];
+    const decoded = await firebaseAdmin.auth().verifyIdToken(token);
+
+    const user = await prisma.user.findUnique({
+      where: { firebaseId: decoded.uid },
+      include: {
+        scores: {
+          include: { game: true },
+          orderBy: { createdAt: "desc" },
+        },
+      },
+    });
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch user scores" });
     console.log(error);
   }
 };
