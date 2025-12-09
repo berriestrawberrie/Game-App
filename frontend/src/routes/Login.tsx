@@ -2,7 +2,6 @@ import Layout from "../components/Layout";
 import RegisterForm from "../components/Login/RegisterForm";
 import { useState } from "react";
 import LoginForm from "../components/Login/LoginForm";
-//import { useAuthStore } from "../store/authStore";
 
 export const Login: React.FC = () => {
   const [showLogin, setShowLogin] = useState(true);

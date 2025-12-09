@@ -72,14 +72,13 @@ export const loginPlayer = async (req: Request, res: Response) => {
 export const getUserScores = async (req: Request, res: Response) => {
   try {
     const authHeader = req.headers.authorization;
+    const { userId } = req.params;
     if (!authHeader) {
       return res.status(401).json({ error: "No token provided" });
     }
-    const token = authHeader.split(" ")[1];
-    const decoded = await firebaseAdmin.auth().verifyIdToken(token);
 
     const user = await prisma.user.findUnique({
-      where: { firebaseId: decoded.uid },
+      where: { firebaseId: userId },
       include: {
         scores: {
           include: { game: true },

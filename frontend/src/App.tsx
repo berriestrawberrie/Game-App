@@ -11,7 +11,6 @@ import { useAuthStore } from "./store/authStore";
 const App: React.FC = () => {
   const setUser = useAuthStore((state) => state.setUser);
   const setToken = useAuthStore((state) => state.setToken);
-  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -34,9 +33,9 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={user ? <Player /> : <Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/allplayers" element={<AllUsers />} />
-        <Route path="/player/:id" element={<Player />} />
+        <Route path="/player/:userId" element={<Player />} />
       </Routes>
     </Router>
   );
