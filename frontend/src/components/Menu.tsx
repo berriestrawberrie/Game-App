@@ -23,12 +23,12 @@ const Menu = () => {
 
         {/* Users */}
         <li>
-          <a href="#" title="Users">
+          <Link to="/allplayers" title="Users">
             <i
               className="fa-solid fa-user-group text-4xl hover:text-lightaccent-600 dark:hover:text-darkaccent-600"
               aria-hidden="true"
             ></i>
-          </a>
+          </Link>
         </li>
 
         {/* Games */}

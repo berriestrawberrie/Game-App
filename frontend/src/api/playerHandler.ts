@@ -69,3 +69,10 @@ export const getUserScores = async (token: string) => {
   });
   return res.data;
 };
+
+export const getAllUsers = async (token: string) => {
+  const res = await axios.get(`${BASE_URL}/users`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};

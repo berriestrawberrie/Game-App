@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./routes/Login";
 import Home from "./routes/Home";
 import { Player } from "./routes/Player";
+import AllUsers from "./routes/AllUsers";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase.init";
@@ -34,7 +35,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={user ? <Player /> : <Login />} />
-
+        <Route path="/allplayers" element={<AllUsers />} />
         <Route path="/player/:id" element={<Player />} />
       </Routes>
     </Router>
