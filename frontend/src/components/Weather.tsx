@@ -46,7 +46,7 @@ const WeatherWidget: React.FC = () => {
             disabled={loading}
           />
           <button
-            className="bg-lightaccent-600 text-white rounded-lg  px-2 transition w-full md:w-auto disabled:opacity-50 dark:bg-darkaccent-600 dark:text-dark-200"
+            className="gmBtn bg-lightaccent-600 text-white rounded-lg  px-2 transition w-full md:w-auto disabled:opacity-50 dark:bg-darkaccent-600 dark:text-dark-200"
             onClick={handleGetWeather}
             disabled={loading}
           >
