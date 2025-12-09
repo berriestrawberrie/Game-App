@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { useAuthStore } from "../store/authStore";
 import { getUserScores } from "../api/playerHandler";
@@ -7,7 +8,7 @@ import BarGraph from "../components/BarGraph";
 import PieGraph from "../components/PieGraph";
 
 export const Player: React.FC = () => {
-  //const [prismaUser, setPrismaUser] = useState<any>(null);
+  const { userId } = useParams<{ userId: string }>();
   const token = useAuthStore((state) => state.token); // get token from Zustand
   const [data, setData] = useState<UserScoreInterface>();
 
@@ -15,7 +16,7 @@ export const Player: React.FC = () => {
     if (!token) return console.log("Missing Player Token");
     const fetchData = async () => {
       try {
-        const fetchedUser = await getUserScores(token);
+        const fetchedUser = await getUserScores(token, userId!);
         setData(fetchedUser);
       } catch (error) {
         console.error("Failed to fetch user score data:", error);
