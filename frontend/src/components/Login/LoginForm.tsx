@@ -39,11 +39,11 @@ const LoginForm: React.FC = () => {
         return;
       }
 
-      const { token } = result;
+      const { token, uid } = result;
       // Save token in localStorage or context
       localStorage.setItem("token", token);
       // Navigate to user page with UID
-      navigate(`/login`);
+      navigate(`/player/${uid}`);
     } catch (error) {
       console.error("Login error:", error);
       setAlert({ message: "Failed to login player.", type: "error" });

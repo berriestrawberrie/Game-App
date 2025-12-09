@@ -7,7 +7,7 @@ export const Logout: React.FC = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login"); // redirect to login page
+    navigate("/"); // redirect to login page
   };
 
   return (

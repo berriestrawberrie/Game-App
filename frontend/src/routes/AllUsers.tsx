@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { useAuthStore } from "../store/authStore";
 import { getAllUsers } from "../api/playerHandler";
 import type { UserInterface } from "../interfaces/interfaces";
+import { Link } from "react-router-dom";
 
 export interface UserData extends UserInterface {
   id: number;
+  firebaseId: string;
 }
 
 const AllUsers = () => {
@@ -32,20 +34,26 @@ const AllUsers = () => {
     <Layout title="All Players">
       <div className="flex flex-wrap gap-2  justify-center">
         {data.map((user) => (
-          <div
-            key={user.id}
-            className="rounded-xl bg-light-200 w-[200px] h-[250px] p-2
-            dark:bg-dark-100 dark:text-white"
+          <Link
+            key={user.firebaseId}
+            to={`/player/${user.firebaseId}`}
+            title="Login"
           >
-            <h3 className="text-center font-bold text-lg">
-              {user.firstName} {user.lastName}
-            </h3>
-            {user.avatarUrl ? (
-              <img className="mx-auto h-[200px]" src={user.avatarUrl} />
-            ) : (
-              <img className="mx-auto h-[200px]" src="/user-2.png" />
-            )}
-          </div>
+            <div
+              key={user.id}
+              className="rounded-xl bg-light-200 w-[200px] h-[250px] p-2
+            dark:bg-dark-100 dark:text-white"
+            >
+              <h3 className="text-center font-bold text-lg">
+                {user.firstName} {user.lastName}
+              </h3>
+              {user.avatarUrl ? (
+                <img className="mx-auto h-[200px]" src={user.avatarUrl} />
+              ) : (
+                <img className="mx-auto h-[200px]" src="/user-2.png" />
+              )}
+            </div>
+          </Link>
         ))}
       </div>
     </Layout>
