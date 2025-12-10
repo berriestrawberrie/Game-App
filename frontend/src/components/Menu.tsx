@@ -44,12 +44,12 @@ const Menu = () => {
 
         {/* Games */}
         <li>
-          <a href="#" title="Games">
+          <Link to="/selectgames" title="Games">
             <i
               className="fa-solid fa-gamepad text-4xl hover:text-lightaccent-600 dark:hover:text-darkaccent-600"
               aria-hidden="true"
             ></i>
-          </a>
+          </Link>
         </li>
 
         {/* Game Statistics */}
