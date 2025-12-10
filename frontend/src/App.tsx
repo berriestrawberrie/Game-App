@@ -3,6 +3,8 @@ import { Login } from "./routes/Login";
 import Home from "./routes/Home";
 import { Player } from "./routes/Player";
 import AllUsers from "./routes/AllUsers";
+import PlayGame from "./routes/PlayGame";
+import SelectGame from "./routes/SelectGames";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase.init";
@@ -36,6 +38,8 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/allplayers" element={<AllUsers />} />
         <Route path="/player/:userId" element={<Player />} />
+        <Route path="/selectgames" element={<SelectGame />} />
+        <Route path="/playgame/:gameTitle/:gameId" element={<PlayGame />} />
       </Routes>
     </Router>
   );
