@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const HelpBox: React.FC = () => {
+const GameRules: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -44,4 +44,4 @@ const HelpBox: React.FC = () => {
   );
 };
 
-export default HelpBox;
+export default GameRules;
