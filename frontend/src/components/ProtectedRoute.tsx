@@ -9,12 +9,9 @@ interface Props {
 
 const ProtectedRoute: React.FC<Props> = ({ children }) => {
   const user = useAuthStore((state) => state.user);
-  const loading = useAuthStore((state) => state.loading);
-
-  if (loading) return <p>Loading...</p>;
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

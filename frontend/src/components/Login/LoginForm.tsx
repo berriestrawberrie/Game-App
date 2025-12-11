@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/playerHandler";
+import { Credentials } from "../Credentials";
 import Alert from "../Alert";
 const FORM_INIT_STATE = {
   password: "",
@@ -57,7 +58,8 @@ const LoginForm: React.FC = () => {
 
   return (
     <>
-      <div className="mx-auto sm:w-4/5  text-black  p-4 flex justify-center items-center dark:text-light-300">
+      <div className="relative mx-auto sm:w-4/5  text-black  p-4 flex justify-center items-center dark:text-light-300">
+        <Credentials />
         <form
           className="w-full flex flex-col justify-evenly rounded-xl bg-light-200 dark:bg-dark-100  p-4 h-[300px]"
           onSubmit={handleLogin}
