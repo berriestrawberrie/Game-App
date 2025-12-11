@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./routes/Login";
-import Home from "./routes/Home";
 import { Player } from "./routes/Player";
 import AllUsers from "./routes/AllUsers";
 import PlayGame from "./routes/PlayGame";
@@ -9,6 +8,8 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase.init";
 import { useAuthStore } from "./store/authStore";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./routes/Home";
 
 const App: React.FC = () => {
   const setUser = useAuthStore((state) => state.setUser);
@@ -34,12 +35,46 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
+        {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/allplayers" element={<AllUsers />} />
-        <Route path="/player/:userId" element={<Player />} />
-        <Route path="/selectgames" element={<SelectGame />} />
-        <Route path="/playgame/:gameTitle/:gameId" element={<PlayGame />} />
+
+        {/* Protected routes */}
+        <Route
+          path="/allplayers"
+          element={
+            <ProtectedRoute>
+              <AllUsers />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/player/:userId"
+          element={
+            <ProtectedRoute>
+              <Player />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/selectgames"
+          element={
+            <ProtectedRoute>
+              <SelectGame />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/playgame/:gameTitle/:gameId"
+          element={
+            <ProtectedRoute>
+              <PlayGame />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
