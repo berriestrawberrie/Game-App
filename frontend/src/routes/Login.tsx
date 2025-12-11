@@ -10,7 +10,7 @@ export const Login: React.FC = () => {
   return (
     <>
       <Layout title={showLogin ? "Login" : "New Player"}>
-        <div className="mx-auto sm:w-4/5 ps-5 -mb-3">
+        <div className=" mx-auto sm:w-4/5 ps-5 -mb-3">
           <span
             onClick={() => setShowLogin(true)}
             className={
