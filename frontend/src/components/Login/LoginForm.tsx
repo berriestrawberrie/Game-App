@@ -45,9 +45,10 @@ const LoginForm: React.FC = () => {
       // Save token in localStorage or context
       localStorage.setItem("token", token);
       localStorage.setItem("name", name);
-      localStorage.setItem("avatar", loggedUser.data.user.avatarUrl),
-        // Navigate to user page with UID
-        navigate(`/player/${uid}`);
+      localStorage.setItem("avatar", loggedUser.data.user.avatarUrl);
+      localStorage.setItem("userId", loggedUser.data.user.id);
+      // Navigate to user page with UID
+      navigate(`/player/${uid}`);
     } catch (error) {
       console.error("Login error:", error);
       setAlert({ message: "Failed to login player.", type: "error" });
