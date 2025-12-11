@@ -52,14 +52,14 @@ export const login = async (userInfo: UserLoginInterface) => {
     // Get ID token to send to backend
     const token = await user.getIdToken();
 
-    await axios.get(`${BASE_URL}/myaccount`, {
+    const loggedUser = await axios.get(`${BASE_URL}/myaccount`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return { user, token, uid: user.uid };
+    return { user, loggedUser, token, uid: user.uid };
   } catch (error) {
-    console.error("Registration failed:", error);
+    console.error("Login failed:", error);
   }
 };
 

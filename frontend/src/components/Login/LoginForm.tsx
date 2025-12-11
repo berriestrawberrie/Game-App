@@ -39,9 +39,14 @@ const LoginForm: React.FC = () => {
         return;
       }
 
-      const { token, uid } = result;
+      const { token, uid, loggedUser } = result;
+      const name =
+        loggedUser.data.user.firstName + " " + loggedUser.data.user.lastName;
       // Save token in localStorage or context
       localStorage.setItem("token", token);
+      localStorage.setItem("name", name);
+      localStorage.setItem("avatar", loggedUser.data.user.avatarUrl);
+      localStorage.setItem("userId", loggedUser.data.user.id);
       // Navigate to user page with UID
       navigate(`/player/${uid}`);
     } catch (error) {
