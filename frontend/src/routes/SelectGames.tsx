@@ -27,7 +27,6 @@ const SelectGame = () => {
       try {
         const fetchedGames = await getAllGames(token);
         setData(fetchedGames);
-        console.log(fetchedGames);
       } catch (error) {
         console.error("Failed to fetch games data:", error);
       } finally {

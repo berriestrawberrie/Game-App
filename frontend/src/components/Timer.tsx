@@ -1,11 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { newGameScore } from "../api/scoreHandler";
+import Alert from "./Alert";
 
-const Timer: React.FC = () => {
+interface TimerProp {
+  token: string;
+  gameId: number;
+  userId: number;
+  onScoreSubmit: () => void;
+  userName: string | null;
+}
+
+const Timer: React.FC<TimerProp> = ({
+  token,
+  gameId,
+  userId,
+  onScoreSubmit,
+  userName,
+}) => {
   const navigate = useNavigate();
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   //const [running, setRunning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
   // Update display string
   const scaledSeconds = elapsedSeconds * 60; // 1 sec = 1 min
@@ -26,17 +46,31 @@ const Timer: React.FC = () => {
   };
 
   // Stop timer
-  const stopTimer = () => {
+  const stopTimer = async () => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
-      //setRunning(false);
+    }
+    try {
+      await newGameScore(token, gameId, userId, Number(minutes));
+      setAlert({
+        message: `${userName} just scored ${Number(minutes)}pts!`,
+        type: "success",
+      });
+      setElapsedSeconds(0);
+      onScoreSubmit();
+    } catch (error) {
+      console.error("Error sending score:", error);
+      setAlert({ message: "Failed to submit Score.", type: "error" });
     }
   };
 
   // Exit (reset)
   const exitTimer = () => {
-    stopTimer();
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     setElapsedSeconds(0);
     navigate(`/selectgames`);
   };
@@ -50,9 +84,16 @@ const Timer: React.FC = () => {
 
   return (
     <>
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <div
         id="timerDisplay"
-        className="text-6xl font-mono font-semibold text-lightaccent-600 mb-10 text-center"
+        className="text-6xl font-mono font-semibold text-lightaccent-600 mt-3 mb-10 text-center"
       >
         {display}
       </div>

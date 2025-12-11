@@ -22,32 +22,30 @@ const PlayGame = () => {
   }>();
   const numericGameId: number = Number(gameId);
   const [data, setData] = useState<ScoreData[]>();
-  const [loading, setLoading] = useState(true);
-  const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
   const userName = localStorage.getItem("name");
+  const userId = Number(localStorage.getItem("userId"));
   const avatar = localStorage.getItem("avatar");
-  useEffect(() => {
-    if (!token) {
-      console.log("Missing Player Token");
-      setLoading(false);
-      return;
+
+  const fetchData = async () => {
+    try {
+      const fetchedScores = await getGameScores(token!, numericGameId);
+      setData(fetchedScores);
+    } catch (error) {
+      console.error("Failed to fetch Scores data:", error);
     }
+  };
 
-    const fetchData = async () => {
-      try {
-        const fetchedScores = await getGameScores(token, numericGameId);
-        setData(fetchedScores);
-        console.log(fetchedScores);
-      } catch (error) {
-        console.error("Failed to fetch Scores data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
+    if (!token) return;
     fetchData();
   }, [token]);
+
+  //UPDATE WITH NEW SCORES
+  const handleScoreSubmitted = () => {
+    fetchData(); // re-fetch scores
+  };
+
   return (
     <>
       <Layout title={gameTitle!}>
@@ -63,7 +61,13 @@ const PlayGame = () => {
             <i className="fa-solid text-8xl text-center fa-table-tennis-paddle-ball w-full my-2"></i>
           )}
         </div>
-        <Timer />
+        <Timer
+          token={token!}
+          gameId={numericGameId}
+          userId={userId}
+          onScoreSubmit={handleScoreSubmitted}
+          userName={userName}
+        />
         <div className="flex flex-col-reverse items-center justify-center mt-4 sm:flex-row">
           {/*TABLE */}
           <table className="text-center mx-auto mt-3 bg-light-100 border-separate  border-spacing-2 rounded-lg dark:bg-dark-100">

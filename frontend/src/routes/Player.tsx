@@ -6,6 +6,8 @@ import { getUserScores } from "../api/playerHandler";
 import type { UserScoreInterface } from "../interfaces/interfaces";
 import BarGraph from "../components/BarGraph";
 import PieGraph from "../components/PieGraph";
+import { sumDurationByGame } from "../helpers/functions";
+import { Link } from "react-router-dom";
 
 export const Player: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -29,12 +31,7 @@ export const Player: React.FC = () => {
   const totalMinutes: number = data
     ? data.scores.reduce((sum, score) => sum + score.durationMinutes, 0)
     : 0;
-  const graphData = data
-    ? data.scores.map((score) => ({
-        key: score.game.title,
-        value: score.durationMinutes,
-      }))
-    : [];
+  const graphData = data ? sumDurationByGame(data) : [];
 
   return (
     <>
@@ -62,11 +59,13 @@ export const Player: React.FC = () => {
               <h3 className=" font-bold ">Total Play Time</h3>
               <p className="mt-2">{totalMinutes}</p>
             </div>
-            <button className="block mx-auto gmBtn text-white bg-lightaccent-600 lg:w-3/4 rounded-xl text-center p-3 text-2xl lg:text-3xl dark:bg-darkaccent-600 dark:text-black ">
-              <h3 className=" font-bold ">
-                <i className="fa-solid fa-dice me-2 "></i>New Game
-              </h3>
-            </button>
+            <Link to="/selectgames" title="Games">
+              <button className="block mx-auto gmBtn text-white bg-lightaccent-600 lg:w-3/4 rounded-xl text-center p-3 text-2xl lg:text-3xl dark:bg-darkaccent-600 dark:text-black ">
+                <h3 className=" font-bold ">
+                  <i className="fa-solid fa-dice me-2 "></i>New Game
+                </h3>
+              </button>
+            </Link>
           </div>
         </div>
       </Layout>

@@ -9,3 +9,19 @@ export const getGameScores = async (token: string, gameId: number) => {
   });
   return res.data;
 };
+
+export const newGameScore = async (
+  token: string,
+  gameId: number,
+  userId: number,
+  durationMinutes: number
+) => {
+  const res = await axios.post(
+    `${BASE_URL}/submit/${gameId}/${userId}`,
+    { durationMinutes: durationMinutes },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  return res.data;
+};
