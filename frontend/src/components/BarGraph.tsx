@@ -22,7 +22,7 @@ const BarGraph: React.FC<BarGraphProp> = ({ graphData }) => {
           <XAxis type="number" />
           <YAxis type="category" dataKey="key" />
           <Tooltip />
-          <Bar dataKey="value" fill="#1F34FF" />
+          <Bar dataKey="value" fill="#1E88E5" />
         </BarChart>
       </ResponsiveContainer>
     </div>

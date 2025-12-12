@@ -31,6 +31,33 @@ export const getGameScores = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+export const getAllScores = async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ error: "No token provided" });
+    }
+
+    const scores = await prisma.score.findMany({
+      include: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!scores)
+      return res.status(404).json({ error: "scores not found for this game" });
+    res.status(200).json(scores);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch scores for this game" });
+    console.log(error);
+  }
+};
 
 export const newGameScore = async (req: Request, res: Response) => {
   try {

@@ -47,12 +47,12 @@ const Menu = () => {
 
             {/* Game Statistics */}
             <li>
-              <a href="#" title="Game Statistics">
+              <Link to="/statistics" title="Games Statistics">
                 <i
                   className="fa-solid fa-trophy text-4xl hover:text-lightaccent-600 dark:hover:text-darkaccent-600"
                   aria-hidden="true"
                 ></i>
-              </a>
+              </Link>
             </li>
 
             {/* SIGN OUT */}
