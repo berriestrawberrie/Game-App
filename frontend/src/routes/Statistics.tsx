@@ -1,19 +1,17 @@
 import Layout from "../components/Layout";
-import type { ScoreInterface } from "../interfaces/interfaces";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "../store/authStore";
 import { getAllScores } from "../api/scoreHandler";
-import { getTop3GamesByDuration, getTop3Players } from "../helpers/functions";
+import {
+  getTop3GamesByDuration,
+  getTop3Players,
+  getAverageDurationPerGame,
+  getTotalDurationPerDay,
+} from "../helpers/functions";
 import TopPie from "../components/Statistics/TopPie";
 import TopPlayers from "../components/Statistics/TopPlayers";
-
-interface ScoreData extends ScoreInterface {
-  id: number;
-  user: {
-    firstName: string;
-    lastName: string;
-  };
-}
+import Averages from "../components/Statistics/Averages";
+import LineGraph from "../components/Statistics/LineGraph";
 
 interface TopScores {
   gameId: number;
@@ -26,10 +24,21 @@ interface TopPlayers {
   totalDuration: number;
 }
 
+interface Averages {
+  gameId: string;
+  averageDuration: number;
+}
+
+interface LineGraph {
+  date: string;
+  totalDuration: number;
+}
+
 const Statistics = () => {
-  const [data, setData] = useState<ScoreData[]>();
   const [top3Games, setTop3Games] = useState<TopScores[]>();
   const [top3Players, setTop3Players] = useState<TopPlayers[]>();
+  const [averageData, setAverageData] = useState<Averages[]>();
+  const [lineData, setLineData] = useState<LineGraph[]>();
   const token = useAuthStore((state) => state.token);
 
   const fetchData = async () => {
@@ -41,8 +50,12 @@ const Statistics = () => {
       //GET THE TOP 3 PLAYERS
       const calculatedTop3Players = getTop3Players(fetchedScores);
       setTop3Players(calculatedTop3Players);
-      console.log(calculatedTop3Players);
-      setData(fetchedScores);
+      //GET AVERAGE DURATION FOR EACH GAME
+      const calculatedAverages = getAverageDurationPerGame(fetchedScores);
+      setAverageData(calculatedAverages);
+      //GET THE DURATION OVER TIME
+      const calculatedOverTime = getTotalDurationPerDay(fetchedScores);
+      setLineData(calculatedOverTime);
     } catch (error) {
       console.error("Failed to fetch Scores data:", error);
     }
@@ -66,7 +79,7 @@ const Statistics = () => {
             </div>
           )}
           {top3Games && (
-            <div>
+            <div className="w-full sm:w-1/2 flex flex-col items-center">
               <h3 className="text-lg font-bold text-center">
                 Top 3 Games by Scores
               </h3>
@@ -74,7 +87,24 @@ const Statistics = () => {
             </div>
           )}
         </div>
-        <div id="lowerStats"></div>
+        <div id="lowerStats" className="flex flex-col sm:flex-row">
+          {averageData && (
+            <div className="w-full sm:w-1/2">
+              <h3 className="text-lg font-bold text-center">
+                Average Duration per Game
+              </h3>
+              <Averages averageData={averageData} />
+            </div>
+          )}
+          {lineData && (
+            <div className="w-full sm:w-1/2">
+              <h3 className="text-lg font-bold text-center">
+                Total Duration per Day
+              </h3>
+              <LineGraph lineData={lineData} />
+            </div>
+          )}
+        </div>
       </div>
     </Layout>
   );
