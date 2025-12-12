@@ -38,7 +38,17 @@ export const getAllScores = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "No token provided" });
     }
 
-    const scores = await prisma.score.findMany();
+    const scores = await prisma.score.findMany({
+      include: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+      },
+    });
 
     if (!scores)
       return res.status(404).json({ error: "scores not found for this game" });
