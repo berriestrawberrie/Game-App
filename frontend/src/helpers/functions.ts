@@ -113,3 +113,56 @@ export function getTop3Players(scores: ScoreData[]) {
 
   return top3;
 }
+
+export function getAverageDurationPerGame(scores: ScoreData[]) {
+  // gameId -> array of durations
+  const grouped = scores.reduce<Record<number, number[]>>((acc, score) => {
+    if (!acc[score.gameId]) {
+      acc[score.gameId] = [];
+    }
+
+    acc[score.gameId].push(score.durationMinutes);
+    return acc;
+  }, {});
+
+  // Convert to averages
+  const result = Object.entries(grouped).map(([gameId, durations]) => {
+    const total = durations.reduce((sum, d) => sum + d, 0);
+    const avg = total / durations.length;
+
+    return {
+      gameId: `${
+        gameId === "1"
+          ? "Chess"
+          : gameId === "2"
+          ? "Chance"
+          : gameId === "3"
+          ? "Puzzle"
+          : "Ping"
+      }`,
+      averageDuration: avg,
+    };
+  });
+
+  return result;
+}
+
+export function getTotalDurationPerDay(scores: ScoreData[]) {
+  const grouped = scores.reduce<Record<string, number>>((acc, score) => {
+    // Extract date only (YYYY-MM-DD)
+    const date = new Date(score.startedAt).toISOString().split("T")[0];
+
+    if (!acc[date]) {
+      acc[date] = 0;
+    }
+
+    acc[date] += score.durationMinutes;
+    return acc;
+  }, {});
+
+  // Convert to array for Recharts
+  return Object.entries(grouped).map(([date, totalDuration]) => ({
+    date,
+    totalDuration,
+  }));
+}
