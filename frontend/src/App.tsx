@@ -10,6 +10,7 @@ import { auth } from "./firebase/firebase.init";
 import { useAuthStore } from "./store/authStore";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./routes/Home";
+import Statistics from "./routes/Statistics";
 
 const App: React.FC = () => {
   const setUser = useAuthStore((state) => state.setUser);
@@ -63,6 +64,14 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <SelectGame />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/statistics"
+          element={
+            <ProtectedRoute>
+              <Statistics />
             </ProtectedRoute>
           }
         />
