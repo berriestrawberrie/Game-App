@@ -29,7 +29,7 @@ app.use("/players", authenticateToken, usersRoute);
 app.use("/games", authenticateToken, gamesRoute);
 app.use("/scores", authenticateToken, scoresRoute);
 
-const PORT = process.env.PORT || 4000;
+const PORT = 10000;
 app.listen(PORT, () =>
   console.log(`Backend running on port this is updated: ${PORT}`)
 );
