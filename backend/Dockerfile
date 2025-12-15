@@ -7,6 +7,14 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+# ✅ Render sets PORT automatically (e.g., 10000)
+ENV PORT=$PORT
 
-CMD ["sh", "-c", "npx prisma generate && npm start"]
+# ✅ Expose the same port Render will forward to
+EXPOSE $PORT
+
+# ✅ Build your app if needed
+# RUN npm run build   # only if you have a build step
+
+# ✅ Start your backend
+CMD ["sh", "-c", "npx prisma generate && node dist/index.js"]
