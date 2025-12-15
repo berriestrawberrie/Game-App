@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { userCreationSchema } from "../schemas/schemas";
 import { PrismaClient } from "@prisma/client";
-import { firebaseAdmin } from "../../config/firebase";
+import { firebaseAdmin } from "../config/firebase";
 
 const prisma = new PrismaClient();
 
@@ -49,6 +49,7 @@ export const registerPlayer = async (req: Request, res: Response) => {
 export const loginPlayer = async (req: Request, res: Response) => {
   try {
     const authHeader = req.headers.authorization;
+    console.log("AUTH HEADER:", req.headers.authorization);
     if (!authHeader) {
       return res.status(401).json({ error: "No token provided" });
     }
@@ -65,6 +66,7 @@ export const loginPlayer = async (req: Request, res: Response) => {
     res.json({ user });
   } catch (error) {
     res.status(500).json({ error: "Failed to login user" });
+    console.error("TOKEN ERROR:", error);
     console.log(error);
   }
 };

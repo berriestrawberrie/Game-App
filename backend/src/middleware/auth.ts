@@ -11,6 +11,11 @@ export async function authenticateToken(
   res: Response,
   next: NextFunction
 ) {
+  // ✅ Allow preflight requests through
+  if (req.method === "OPTIONS") {
+    return next();
+  }
+
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {

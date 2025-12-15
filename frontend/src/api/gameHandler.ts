@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BACKEND_PORT = "4000";
-const BASE_URL = `http://localhost:${BACKEND_PORT}/games`;
+const BASE_URL = `${import.meta.env.VITE_API_URL}/games`;
 
 export const getAllGames = async (token: string) => {
   const res = await axios.get(`${BASE_URL}/selectgames`, {

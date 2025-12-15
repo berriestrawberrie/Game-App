@@ -6,18 +6,27 @@ import { scoresRoute } from "./routes/scores";
 import { authenticateToken } from "./middleware/auth";
 
 const app = express();
-// Allow requests from your frontend origin
-app.use(
-  cors({
-    origin: "http://localhost:5173", // React dev server
-    credentials: true, // if you send cookies/auth headers
-  })
-);
+
+const corsOptions = {
+  origin: ["http://localhost:5173", "https://game-app-frontend.onrender.com"],
+  credentials: true,
+};
+
+// ✅ Global CORS (handles ALL preflight automatically in Express 5)
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
+// ✅ Protected routes
 app.use("/players", authenticateToken, usersRoute);
 app.use("/games", authenticateToken, gamesRoute);
 app.use("/scores", authenticateToken, scoresRoute);
 
-app.listen(4000, () => console.log("Backend running on port 4000"));
+const PORT = 10000;
+app.listen(PORT, () =>
+  console.log(`Backend running on port this is updated: ${PORT}`)
+);

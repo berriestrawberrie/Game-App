@@ -3,4 +3,8 @@ node_modules
 .env
 
 /generated/prisma
-/config/firebase-service-account.json
+src/config/firebase-service-account.json
+config/firebase-service-account.json
+firebase-service-account.json
+
+//
