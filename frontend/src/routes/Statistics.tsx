@@ -12,6 +12,8 @@ import TopPie from "../components/Statistics/TopPie";
 import TopPlayers from "../components/Statistics/TopPlayers";
 import Averages from "../components/Statistics/Averages";
 import LineGraph from "../components/Statistics/LineGraph";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 interface TopScores {
   gameId: number;
@@ -39,6 +41,7 @@ const Statistics = () => {
   const [top3Players, setTop3Players] = useState<TopPlayers[]>();
   const [averageData, setAverageData] = useState<Averages[]>();
   const [lineData, setLineData] = useState<LineGraph[]>();
+  const [loading, setLoading] = useState(true);
   const token = useAuthStore((state) => state.token);
 
   const fetchData = async () => {
@@ -58,6 +61,8 @@ const Statistics = () => {
       setLineData(calculatedOverTime);
     } catch (error) {
       console.error("Failed to fetch Scores data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,44 +73,56 @@ const Statistics = () => {
 
   return (
     <Layout title="Game Statistics">
-      <div id="statWrapper">
-        <div id="topStats" className="flex flex-col sm:flex-row">
-          {top3Players && (
-            <div className="w-full sm:w-1/2">
-              <h3 className="text-lg font-bold text-center">
-                Top 3 Players by Scores
-              </h3>
-              <TopPlayers playerData={top3Players} />
-            </div>
-          )}
-          {top3Games && (
-            <div className="w-full sm:w-1/2 flex flex-col items-center">
-              <h3 className="text-lg font-bold text-center">
-                Top 3 Games by Scores
-              </h3>
-              <TopPie top3Data={top3Games} />
-            </div>
-          )}
+      {loading ? (
+        // Loader centered on the page
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="50vh"
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <div id="statWrapper">
+          <div id="topStats" className="flex flex-col sm:flex-row">
+            {top3Players && (
+              <div className="w-full sm:w-1/2">
+                <h3 className="text-lg font-bold text-center">
+                  Top 3 Players by Scores
+                </h3>
+                <TopPlayers playerData={top3Players} />
+              </div>
+            )}
+            {top3Games && (
+              <div className="w-full sm:w-1/2 flex flex-col items-center">
+                <h3 className="text-lg font-bold text-center">
+                  Top 3 Games by Scores
+                </h3>
+                <TopPie top3Data={top3Games} />
+              </div>
+            )}
+          </div>
+          <div id="lowerStats" className="flex flex-col sm:flex-row">
+            {averageData && (
+              <div className="w-full sm:w-1/2">
+                <h3 className="text-lg font-bold text-center">
+                  Average Duration per Game
+                </h3>
+                <Averages averageData={averageData} />
+              </div>
+            )}
+            {lineData && (
+              <div className="w-full sm:w-1/2">
+                <h3 className="text-lg font-bold text-center">
+                  Total Duration per Day
+                </h3>
+                <LineGraph lineData={lineData} />
+              </div>
+            )}
+          </div>
         </div>
-        <div id="lowerStats" className="flex flex-col sm:flex-row">
-          {averageData && (
-            <div className="w-full sm:w-1/2">
-              <h3 className="text-lg font-bold text-center">
-                Average Duration per Game
-              </h3>
-              <Averages averageData={averageData} />
-            </div>
-          )}
-          {lineData && (
-            <div className="w-full sm:w-1/2">
-              <h3 className="text-lg font-bold text-center">
-                Total Duration per Day
-              </h3>
-              <LineGraph lineData={lineData} />
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </Layout>
   );
 };

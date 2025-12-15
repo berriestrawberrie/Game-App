@@ -34,11 +34,7 @@ const AllUsers = () => {
     <Layout title="All Players">
       <div className="flex flex-wrap gap-2  justify-center">
         {data.map((user) => (
-          <Link
-            key={user.firebaseId}
-            to={`/player/${user.firebaseId}`}
-            title="Login"
-          >
+          <Link key={user.firebaseId} to={`/player/${user.firebaseId}`}>
             <div
               key={user.id}
               className="rounded-xl bg-light-200 w-[200px] h-[250px] p-2

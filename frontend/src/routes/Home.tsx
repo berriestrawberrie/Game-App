@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import { useAuthStore } from "../store/authStore";
 import { Login } from "./Login";
+import HomeContent from "../components/HomeContent";
 
 const Home = () => {
   const user = useAuthStore((state) => state.user);
@@ -9,7 +10,7 @@ const Home = () => {
     <>
       {user ? (
         <Layout title={`${userName} Welcome Back!`}>
-          <p>I'm a paragraph!</p>
+          <HomeContent />
         </Layout>
       ) : (
         <Login />

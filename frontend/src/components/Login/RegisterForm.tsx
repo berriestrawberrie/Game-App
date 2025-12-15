@@ -162,7 +162,10 @@ const RegisterForm: React.FC = () => {
                 className="block text-sm text-gray-600 border border-light-200 max-w-[200px] rounded p-1 dark:text-light-200"
               />
             </div>
-
+            <p className="text-xs -mt-4 mb-2 font-bold">
+              *You may register new users, but you will not be able to reset the
+              password or delete the account as this is a test application.
+            </p>
             <button
               type="submit"
               className="w-full bg-blue-600 p-3 text-white rounded hover:bg-blue-700 transition"

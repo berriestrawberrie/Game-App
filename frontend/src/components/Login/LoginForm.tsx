@@ -49,7 +49,7 @@ const LoginForm: React.FC = () => {
       localStorage.setItem("avatar", loggedUser.data.user.avatarUrl);
       localStorage.setItem("userId", loggedUser.data.user.id);
       // Navigate to user page with UID
-      navigate(`/player/${uid}`);
+      navigate(`/`);
     } catch (error) {
       console.error("Login error:", error);
       setAlert({ message: "Failed to login player.", type: "error" });
