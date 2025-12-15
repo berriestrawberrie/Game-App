@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newGameScore = exports.getGameScores = void 0;
+exports.newGameScore = exports.getAllScores = exports.getGameScores = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const getGameScores = async (req, res) => {
@@ -31,6 +31,33 @@ const getGameScores = async (req, res) => {
     }
 };
 exports.getGameScores = getGameScores;
+const getAllScores = async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({ error: "No token provided" });
+        }
+        const scores = await prisma.score.findMany({
+            include: {
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        email: true,
+                    },
+                },
+            },
+        });
+        if (!scores)
+            return res.status(404).json({ error: "scores not found for this game" });
+        res.status(200).json(scores);
+    }
+    catch (error) {
+        res.status(500).json({ error: "Failed to fetch scores for this game" });
+        console.log(error);
+    }
+};
+exports.getAllScores = getAllScores;
 const newGameScore = async (req, res) => {
     try {
         const authHeader = req.headers.authorization;
