@@ -1,23 +1,15 @@
-FROM node:22
+FROM node:18
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies first (better caching)
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
-# Copy source code
 COPY . .
 
-# Generate Prisma client
+# Prisma needs this
 RUN npx prisma generate
 
-# Build TypeScript
-RUN npm run build
+EXPOSE 3000
 
-# Expose backend port
-EXPOSE 4000
-
-# Run compiled JS (dist/index.js)
-CMD ["node", "dist/index.js"]
+CMD ["npm", "start"]
