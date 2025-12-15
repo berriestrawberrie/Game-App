@@ -40,7 +40,7 @@ const LoginForm: React.FC = () => {
         return;
       }
 
-      const { token, uid, loggedUser } = result;
+      const { token, loggedUser } = result;
       const name =
         loggedUser.data.user.firstName + " " + loggedUser.data.user.lastName;
       // Save token in localStorage or context
