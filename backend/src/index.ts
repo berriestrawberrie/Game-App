@@ -9,7 +9,7 @@ const app = express();
 // Allow requests from your frontend origin
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://gameapp-frontend.onrender.com/"], // React dev server & prod
+    origin: ["http://localhost:5173", "https://gameapp-frontend.onrender.com"], // React dev server & prod
     credentials: true, // if you send cookies/auth headers
   })
 );
