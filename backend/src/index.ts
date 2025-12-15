@@ -13,7 +13,11 @@ app.use(
   })
 );
 
-app.options("*", cors()); // preflight support
+// ✅ Preflight support for ALL routes
+app.options("*", cors());
+app.options("/players/*", cors());
+app.options("/games/*", cors());
+app.options("/scores/*", cors());
 
 app.use(express.json());
 
