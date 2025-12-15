@@ -30,4 +30,4 @@ app.use("/games", authenticateToken, gamesRoute);
 app.use("/scores", authenticateToken, scoresRoute);
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log("Backend running on port 4000"));
+app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
