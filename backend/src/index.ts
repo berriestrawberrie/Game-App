@@ -12,11 +12,8 @@ const corsOptions = {
   credentials: true,
 };
 
-// ✅ Global CORS
+// ✅ Global CORS (handles ALL preflight automatically in Express 5)
 app.use(cors(corsOptions));
-
-// ✅ Preflight for ALL routes (Express 5 requires this)
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 

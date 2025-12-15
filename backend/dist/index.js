@@ -14,10 +14,8 @@ const corsOptions = {
     origin: ["http://localhost:5173", "https://game-app-frontend.onrender.com"],
     credentials: true,
 };
-// ✅ Global CORS
+// ✅ Global CORS (handles ALL preflight automatically in Express 5)
 app.use((0, cors_1.default)(corsOptions));
-// ✅ Preflight for ALL routes (Express 5 requires this)
-app.options("*", (0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.get("/", (req, res) => {
     res.send("Backend is running");
