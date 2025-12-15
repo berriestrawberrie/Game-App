@@ -13,14 +13,6 @@ app.use(
   })
 );
 
-// ✅ Preflight support for ALL routes
-app.options("(.*)", cors());
-
-// ✅ Preflight support for specific route groups
-app.options("/players/(.*)", cors());
-app.options("/games/(.*)", cors());
-app.options("/scores/(.*)", cors());
-
 app.use(express.json());
 
 app.get("/", (req, res) => {

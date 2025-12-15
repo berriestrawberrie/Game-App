@@ -14,12 +14,6 @@ app.use((0, cors_1.default)({
     origin: ["http://localhost:5173", "https://gameapp-frontend.onrender.com"],
     credentials: true,
 }));
-// ✅ Preflight support for ALL routes
-app.options("(.*)", (0, cors_1.default)());
-// ✅ Preflight support for specific route groups
-app.options("/players/(.*)", (0, cors_1.default)());
-app.options("/games/(.*)", (0, cors_1.default)());
-app.options("/scores/(.*)", (0, cors_1.default)());
 app.use(express_1.default.json());
 app.get("/", (req, res) => {
     res.send("Backend is running");
