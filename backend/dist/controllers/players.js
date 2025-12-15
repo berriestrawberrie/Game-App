@@ -1,10 +1,13 @@
-import { userCreationSchema } from "../schemas/schemas";
-import { PrismaClient } from "@prisma/client";
-import { firebaseAdmin } from "../../config/firebase";
-const prisma = new PrismaClient();
-export const registerPlayer = async (req, res) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getAllUsers = exports.getUserScores = exports.loginPlayer = exports.registerPlayer = void 0;
+const schemas_1 = require("../schemas/schemas");
+const client_1 = require("@prisma/client");
+const firebase_1 = require("../config/firebase");
+const prisma = new client_1.PrismaClient();
+const registerPlayer = async (req, res) => {
     try {
-        const validatedUser = userCreationSchema.safeParse(req.body);
+        const validatedUser = schemas_1.userCreationSchema.safeParse(req.body);
         if (!validatedUser.success) {
             return res.status(400).json({
                 error: "Validation failed on request",
@@ -16,7 +19,7 @@ export const registerPlayer = async (req, res) => {
             return res.status(401).json({ error: "No token provided" });
         }
         const token = authHeader.split(" ")[1];
-        const decoded = await firebaseAdmin.auth().verifyIdToken(token);
+        const decoded = await firebase_1.firebaseAdmin.auth().verifyIdToken(token);
         // Check if user already exists in Prisma
         let user = await prisma.user.findUnique({
             where: { firebaseId: decoded.uid },
@@ -39,7 +42,8 @@ export const registerPlayer = async (req, res) => {
         res.status(500).json({ error: "Failed to register player" });
     }
 };
-export const loginPlayer = async (req, res) => {
+exports.registerPlayer = registerPlayer;
+const loginPlayer = async (req, res) => {
     try {
         const authHeader = req.headers.authorization;
         console.log("AUTH HEADER:", req.headers.authorization);
@@ -47,7 +51,7 @@ export const loginPlayer = async (req, res) => {
             return res.status(401).json({ error: "No token provided" });
         }
         const token = authHeader.split(" ")[1];
-        const decoded = await firebaseAdmin.auth().verifyIdToken(token);
+        const decoded = await firebase_1.firebaseAdmin.auth().verifyIdToken(token);
         const user = await prisma.user.findUnique({
             where: { firebaseId: decoded.uid },
         });
@@ -62,7 +66,8 @@ export const loginPlayer = async (req, res) => {
         console.log(error);
     }
 };
-export const getUserScores = async (req, res) => {
+exports.loginPlayer = loginPlayer;
+const getUserScores = async (req, res) => {
     try {
         const authHeader = req.headers.authorization;
         const { userId } = req.params;
@@ -87,7 +92,8 @@ export const getUserScores = async (req, res) => {
         console.log(error);
     }
 };
-export const getAllUsers = async (req, res) => {
+exports.getUserScores = getUserScores;
+const getAllUsers = async (req, res) => {
     try {
         const users = await prisma.user.findMany();
         if (users.length === 0) {
@@ -100,3 +106,4 @@ export const getAllUsers = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch students" });
     }
 };
+exports.getAllUsers = getAllUsers;

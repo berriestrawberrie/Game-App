@@ -1,6 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-export const getGameScores = async (req, res) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.newGameScore = exports.getGameScores = void 0;
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+const getGameScores = async (req, res) => {
     try {
         const authHeader = req.headers.authorization;
         const { gameId } = req.params;
@@ -27,7 +30,8 @@ export const getGameScores = async (req, res) => {
         console.log(error);
     }
 };
-export const newGameScore = async (req, res) => {
+exports.getGameScores = getGameScores;
+const newGameScore = async (req, res) => {
     try {
         const authHeader = req.headers.authorization;
         const gameId = Number(req.params.gameId);
@@ -54,3 +58,4 @@ export const newGameScore = async (req, res) => {
         console.log(error);
     }
 };
+exports.newGameScore = newGameScore;

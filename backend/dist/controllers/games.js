@@ -1,6 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-export const getAllGames = async (req, res) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getAllGames = void 0;
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+const getAllGames = async (req, res) => {
     try {
         const games = await prisma.game.findMany();
         if (games.length === 0) {
@@ -13,3 +16,4 @@ export const getAllGames = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch games" });
     }
 };
+exports.getAllGames = getAllGames;

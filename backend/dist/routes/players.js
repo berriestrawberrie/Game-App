@@ -1,7 +1,10 @@
-import { Router } from "express";
-import { registerPlayer, loginPlayer, getUserScores, getAllUsers, } from "../controllers/players";
-export const usersRoute = Router();
-usersRoute.post("/register", registerPlayer);
-usersRoute.get("/myaccount", loginPlayer);
-usersRoute.get("/scores/:userId", getUserScores);
-usersRoute.get("/users", getAllUsers);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.usersRoute = void 0;
+const express_1 = require("express");
+const players_1 = require("../controllers/players");
+exports.usersRoute = (0, express_1.Router)();
+exports.usersRoute.post("/register", players_1.registerPlayer);
+exports.usersRoute.get("/myaccount", players_1.loginPlayer);
+exports.usersRoute.get("/scores/:userId", players_1.getUserScores);
+exports.usersRoute.get("/users", players_1.getAllUsers);

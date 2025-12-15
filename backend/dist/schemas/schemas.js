@@ -1,27 +1,30 @@
-import { z } from "zod";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ScoreSchema = exports.GameSchema = exports.userCreationSchema = exports.userSchema = void 0;
+const zod_1 = require("zod");
 // User schema
-export const userSchema = z.object({
-    email: z.string().email(),
-    firstName: z.string().min(3, "First name must be at least 3 characters long"),
-    lastName: z.string().min(3, "Last name must be at least 3 characters long"),
-    avatarUrl: z.string().optional(),
+exports.userSchema = zod_1.z.object({
+    email: zod_1.z.string().email(),
+    firstName: zod_1.z.string().min(3, "First name must be at least 3 characters long"),
+    lastName: zod_1.z.string().min(3, "Last name must be at least 3 characters long"),
+    avatarUrl: zod_1.z.string().optional(),
 });
-export const userCreationSchema = userSchema.extend({
-    password: z
+exports.userCreationSchema = exports.userSchema.extend({
+    password: zod_1.z
         .string()
         .min(6, "Password must be at least 6 characters long")
         .max(20, "Password must be at most 20 characters long"),
 });
 // Game schema
-export const GameSchema = z.object({
-    title: z.string().min(3, "Game title must be at least 3 characters long"),
-    description: z.string().optional(),
+exports.GameSchema = zod_1.z.object({
+    title: zod_1.z.string().min(3, "Game title must be at least 3 characters long"),
+    description: zod_1.z.string().optional(),
 });
 // Score schema
-export const ScoreSchema = z.object({
-    userId: z.number().int(), // relation handled by Prisma
-    gameId: z.number().int(),
-    startedAt: z.date(),
-    stoppedAt: z.date().optional(),
-    durationMinutes: z.number().int().optional(),
+exports.ScoreSchema = zod_1.z.object({
+    userId: zod_1.z.number().int(), // relation handled by Prisma
+    gameId: zod_1.z.number().int(),
+    startedAt: zod_1.z.date(),
+    stoppedAt: zod_1.z.date().optional(),
+    durationMinutes: zod_1.z.number().int().optional(),
 });
