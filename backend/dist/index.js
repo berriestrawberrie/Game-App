@@ -10,14 +10,19 @@ const games_1 = require("./routes/games");
 const scores_1 = require("./routes/scores");
 const auth_1 = require("./middleware/auth");
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
-    origin: ["http://localhost:5173", "https://gameapp-frontend.onrender.com"],
+const corsOptions = {
+    origin: ["http://localhost:5173", "https://game-app-frontend.onrender.com"],
     credentials: true,
-}));
+};
+// ✅ Global CORS
+app.use((0, cors_1.default)(corsOptions));
+// ✅ Preflight for ALL routes (Express 5 requires this)
+app.options("*", (0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.get("/", (req, res) => {
     res.send("Backend is running");
 });
+// ✅ Protected routes
 app.use("/players", auth_1.authenticateToken, players_1.usersRoute);
 app.use("/games", auth_1.authenticateToken, games_1.gamesRoute);
 app.use("/scores", auth_1.authenticateToken, scores_1.scoresRoute);

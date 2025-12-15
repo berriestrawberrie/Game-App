@@ -6,12 +6,17 @@ import { scoresRoute } from "./routes/scores";
 import { authenticateToken } from "./middleware/auth";
 
 const app = express();
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://gameapp-frontend.onrender.com"],
-    credentials: true,
-  })
-);
+
+const corsOptions = {
+  origin: ["http://localhost:5173", "https://game-app-frontend.onrender.com"],
+  credentials: true,
+};
+
+// ✅ Global CORS
+app.use(cors(corsOptions));
+
+// ✅ Preflight for ALL routes (Express 5 requires this)
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
@@ -19,6 +24,7 @@ app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
+// ✅ Protected routes
 app.use("/players", authenticateToken, usersRoute);
 app.use("/games", authenticateToken, gamesRoute);
 app.use("/scores", authenticateToken, scoresRoute);
