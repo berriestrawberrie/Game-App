@@ -9,6 +9,13 @@ export const getGameScores = async (token: string, gameId: number) => {
   return res.data;
 };
 
+export const getAllScores = async (token: string) => {
+  const res = await axios.get(`${BASE_URL}/all`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
+
 export const newGameScore = async (
   token: string,
   gameId: number,
