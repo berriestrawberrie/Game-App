@@ -8,8 +8,7 @@ import type {
 } from "../interfaces/interfaces";
 import { userCreationSchema } from "../schemas/schemas";
 
-const BACKEND_PORT = "4000";
-const BASE_URL = `http://localhost:${BACKEND_PORT}/players`;
+const BASE_URL = `${import.meta.env.VITE_API_URL}/players`;
 
 export const registerPlayer = async (userInfo: UserWithPasswordInterface) => {
   try {
