@@ -1,6 +1,6 @@
 import admin from "firebase-admin";
 
-if (!admin.apps.length) {
+if (process.env.NODE_ENV !== "test" && !admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
