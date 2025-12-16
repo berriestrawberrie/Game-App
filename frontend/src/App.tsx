@@ -15,6 +15,7 @@ import Statistics from "./routes/Statistics";
 const App: React.FC = () => {
   const setUser = useAuthStore((state) => state.setUser);
   const setToken = useAuthStore((state) => state.setToken);
+  const setAuthLoading = useAuthStore((state) => state.setAuthLoading);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -28,17 +29,19 @@ const App: React.FC = () => {
         setToken(null);
         localStorage.removeItem("token");
       }
+
+      //THIS MUST RUN — otherwise ProtectedRoute never unlocks
+      setAuthLoading(false);
     });
 
     return () => unsubscribe();
-  }, [setUser, setToken]);
+  }, [setUser, setToken, setAuthLoading]);
 
   return (
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
 
         {/* Protected routes */}
         <Route
@@ -46,6 +49,15 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <AllUsers />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
             </ProtectedRoute>
           }
         />
