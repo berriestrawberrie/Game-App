@@ -6,6 +6,7 @@ import Timer from "../components/Timer";
 import HelpBox from "../components/GameRules";
 import { getGameScores } from "../api/scoreHandler";
 import type { ScoreInterface } from "../interfaces/interfaces";
+import Loading from "../components/Loading";
 
 interface ScoreData extends ScoreInterface {
   id: number;
@@ -20,6 +21,7 @@ const PlayGame = () => {
     gameTitle: string;
     gameId: string;
   }>();
+  const [loading, setLoading] = useState(true);
   const numericGameId: number = Number(gameId);
   const [data, setData] = useState<ScoreData[]>();
   const token = useAuthStore((state) => state.token);
@@ -31,6 +33,7 @@ const PlayGame = () => {
     try {
       const fetchedScores = await getGameScores(token!, numericGameId);
       setData(fetchedScores);
+      setLoading(false);
     } catch (error) {
       console.error("Failed to fetch Scores data:", error);
     }
@@ -70,27 +73,33 @@ const PlayGame = () => {
         />
         <div className="flex flex-col-reverse items-center justify-center mt-4 sm:flex-row">
           {/*TABLE */}
-          <table className="text-center mx-auto mt-3 bg-light-100 border-separate  border-spacing-2 rounded-lg dark:bg-dark-100">
-            <thead>
-              <tr>
-                <th>GameID</th>
-                <th>Name</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data.map((score, index) => (
-                  <tr key={index}>
-                    <td>{score.gameId}</td>
-                    <td>{`${score.user.firstName}`}</td>
-                    <td>{score.durationMinutes ?? "-"}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          {loading ? (
+            <div className="w-full sm:w-1/2">
+              <Loading />
+            </div>
+          ) : (
+            <table className="text-center mx-auto mt-3 bg-light-100 border-separate  border-spacing-2 rounded-lg dark:bg-dark-100">
+              <thead>
+                <tr>
+                  <th>GameID</th>
+                  <th>Name</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data &&
+                  data.map((score, index) => (
+                    <tr key={index}>
+                      <td>{score.gameId}</td>
+                      <td>{`${score.user.firstName}`}</td>
+                      <td>{score.durationMinutes ?? "-"}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
           {/*USER DISPLAY */}
-          <div className="text-center text-xl">
+          <div className="text-center w-full sm:w-1/2 text-xl">
             <img
               className="mx-auto h-[300px]"
               src={avatar ?? "/user-2.png"}

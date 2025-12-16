@@ -12,8 +12,7 @@ import TopPie from "../components/Statistics/TopPie";
 import TopPlayers from "../components/Statistics/TopPlayers";
 import Averages from "../components/Statistics/Averages";
 import LineGraph from "../components/Statistics/LineGraph";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
+import Loading from "../components/Loading";
 
 interface TopScores {
   gameId: number;
@@ -74,15 +73,7 @@ const Statistics = () => {
   return (
     <Layout title="Game Statistics">
       {loading ? (
-        // Loader centered on the page
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="50vh"
-        >
-          <CircularProgress />
-        </Box>
+        <Loading />
       ) : (
         <div id="statWrapper">
           <div id="topStats" className="flex flex-col sm:flex-row">
