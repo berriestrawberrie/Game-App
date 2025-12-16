@@ -4,8 +4,7 @@ import { useAuthStore } from "../store/authStore";
 import { getAllGames } from "../api/gameHandler";
 import type { GameInterface } from "../interfaces/interfaces";
 import { Link } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
+import Loading from "../components/Loading";
 
 interface GameData extends GameInterface {
   id: number;
@@ -40,15 +39,7 @@ const SelectGame = () => {
     <>
       <Layout title="Select A Game">
         {loading ? (
-          // Loader centered on the page
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="50vh"
-          >
-            <CircularProgress />
-          </Box>
+          <Loading />
         ) : (
           <div className="flex flex-wrap gap-2 justify-center">
             {data &&
