@@ -1,12 +1,8 @@
 import admin from "firebase-admin";
-
+const serviceAccount = require("../config/firebase-service-account.json");
 if (process.env.NODE_ENV !== "test" && !admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-    }),
+    credential: admin.credential.cert(serviceAccount),
   });
 }
 

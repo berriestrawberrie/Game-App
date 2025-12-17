@@ -24,5 +24,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     await signOut(auth);
     set({ user: null, token: null });
     localStorage.removeItem("token");
+    localStorage.removeItem("name");
+    localStorage.removeItem("avatar");
+    localStorage.removeItem("userId");
   },
 }));
