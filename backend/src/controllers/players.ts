@@ -1,7 +1,8 @@
 import { userCreationSchema } from "../schemas/schemas";
 import { firebaseAdmin } from "../config/firebase";
 import type { Request, Response } from "express";
-import { prisma } from "../prisma"; // ✅ IMPORTANT
+import { prisma } from "../prisma";
+import logger from "../utils/logger";
 
 export const registerPlayer = async (req: Request, res: Response) => {
   try {
@@ -61,6 +62,8 @@ export const loginPlayer = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ error: "User not found in Prisma" });
     }
+
+    logger.info("User logged in with email: ", { email: user.email });
     res.json({ user });
   } catch (error) {
     res.status(500).json({ error: "Failed to login user" });
