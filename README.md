@@ -29,6 +29,7 @@ Before you begin, ensure you have:
 ## 🚀 Deployment Overview
 
 This app is deployed on [Render](https://render.com) using Docker containers for both the **frontend** and **backend**. Each service is defined with its own `Dockerfile` and runs independently in production.
+![Render Dashboard](frontend/public/Render.png)
 
 ### 🌐 Live App
 
@@ -57,12 +58,12 @@ You can access the deployed frontend here:
 
 ---
 
-This setup ensures clean separation between frontend and backend services, with scalable deployment via Docker and Render. Let me know if you’d like to add environment setup instructions or CI/CD integration notes.
+This setup ensures clean separation between frontend and backend services, with scalable deployment via Docker and Render.
 
 # 📦 Database Schema Overview
 
 This project uses **Prisma ORM** with a **PostgreSQL** database.  
-The schema defines three core models — **User**, **Game**, and **Score** — forming a simple relational structure for tracking gameplay sessions and player performance. Validated using ZOD.
+The schema defines three core models — **User**, **Game**, and **Score** — forming a simple relational structure for tracking gameplay sessions and player performance. Validated using ZOD. Login authentication using firebase.
 
 ---
 
@@ -267,3 +268,28 @@ This ensures empty results are handled correctly.
 This verifies the controller’s error-handling branch.
 
 The test also suppresses `console.error` output to keep logs clean.
+
+## 🗂️ State Management with Zustand
+
+This project uses **Zustand** as a lightweight, scalable state‑management solution for handling authentication data across the app. Zustand provides a minimal API with no boilerplate, making it ideal for managing global state without the complexity of larger tools like Redux.
+
+### **How It Works**
+
+I define a dedicated `useAuthStore` that centralizes all authentication‑related state:
+
+- **`user`** – the currently authenticated Firebase user
+- **`token`** – the user’s auth token, persisted in localStorage
+- **`loading`** – a simple flag used during initial auth checks
+- **`setUser` / `setToken`** – small, focused setters for updating state
+- **`logout`** – a fully encapsulated sign‑out flow that clears Firebase auth and localStorage
+
+Because Zustand stores are just hooks, components can subscribe to exactly the pieces of state they need, avoiding unnecessary re-renders and keeping the codebase clean and predictable.
+
+### **Why Zustand?**
+
+- Minimal setup and zero boilerplate
+- Built‑in support for async actions (like Firebase sign‑out)
+- Easy to scale as the app grows
+- Encourages small, composable state slices rather than monolithic stores
+
+This pattern keeps authentication logic isolated, testable, and easy to reason about—perfect for a modern React/Firebase stack.
